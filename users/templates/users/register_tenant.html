@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h2>Register</h2>
+<form method="post" id="property_form" action="{% url 'registerTenant' %}"
+    data-properties-url="{% url 'ajax_load_properties' %}">{% csrf_token %}
+    {% for field in tenant_reg_form %}
+    <p>
+        {{field.label_tag}}
+        {{field}}
+
+        {% if field.help_text %}
+        <small style="color: grey;">{{field.help_text}}</small>
+        {% endif %}
+
+        {% for error in field.errors %}
+    <p style="color: red;">{{error}}</p>
+    {% endfor %}
+    </p>
+    {% endfor %}
+    <button type="submit">Register as tenant</button>
+
+</form>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_property_owner").change(function () {
+        const url = $("#property_form").attr("data-properties-url");
+        const ownerId = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'owner_id': ownerId
+            },
+            success: function (data) {
+                $("#id_property").html(data);
+            }
+        });
+
+    });
+</script>
+{% endblock %}

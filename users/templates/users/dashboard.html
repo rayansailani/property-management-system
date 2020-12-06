@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- /.container -->
+<h1>user details</h1>
+<p>{{request.user.username}}</p>
+{% if request.user.is_ppty_owner %}
+<p>Total number of houses for rent : {{total_properties_rent}}</p>
+<p>Number of houses currently occupied: {{no_properties_occupied}}</p>
+<p>Number of properties remaining to be occupied: {{no_properties_unoccupied}}</p>
+<p>total security deposit in hand: {{total_deposit}} </p>
+<p>total rent monthy: {{total_rent}} </p>
+<p>Rents left: {{rents_left}}</p>
+<p>Rents paid: {{rents_done}}</p>
+<p>average rent per house: {{average_rent}} </p>
+{% endif %}
+<p>number of properties for sale: </p>
+<hr style="background-color: black;">
+<!-- unoccupied houses for rent -->
+{% if unoccupied_houses %}
+<h1>All your properties for rent </h1>
+{% for property in unoccupied_houses %}
+{{property.property_name}}
+<br>
+<a href="{% url 'property_rent_detail' property.id %}">more info</a>
+<br>
+<hr style="background-color: black;">
+{% endfor %}
+{% endif %}
+<!-- if the user stays in rented place -->
+{% if rental_house %}
+<h1>Your rental house </h1>
+{{ rental_house.property }}
+{% if rent_status  %}
+<p>Rent paid </p>
+{% else %}
+<a href="{% url 'payment_rent' %}">Pay rent for the month</a>
+{% endif %}
+<hr style="background-color: black;">
+{% endif %}
+<!-- if the user has tenants occupying his property -->
+{% if tenants %}
+<h1>Tenants that are staying in your property</h1>
+{% for tenant in tenants  %}
+{{tenant.tenant}}
+<br>
+{{tenant.start_date}}
+<br>
+{{tenant.property.rent}}
+
+<br>
+<a href="{% url 'remove_tenant' tenant.id %}">Remove Tenant</a><br>
+<a href="{% url 'tenant_detail' tenant.id %}">More information</a><br>
+
+<hr style="background-color: black;">
+
+{% endfor %}
+<h1>Rent information detail</h1>
+{% for rent in rents %}
+<p>Name - {{rent.sender}} </p>
+<p>transaction_id - {{rent.transaction_id}}</p>
+<p>month of - {{rent.month_of}}</p>
+<p>Status - successful</p>
+
+{% endfor %}
+{% endif %}
+<hr>
+<h1>Properties registered for sale</h1>
+{% if  houses %}
+{% for house in houses %}
+<p>{{house.no}}</p>
+<p>{{house.locality}}</p>
+<p>{{house.area}}</p>
+<p>{{house.state}}</p>
+<p>{{house.width}}*{{house.length}}</p>
+<p>{{house.cost_sqft}}</p>
+<p>{{house.ceritification}}-Khata</p>
+<hr>
+
+
+{% endfor %}
+{% endif %}
+<h1>Appointments coming up</h1>
+{% for appointment in appointments %}
+{{appointment.date_appointement}}
+{% endfor %}
+{% endblock %}

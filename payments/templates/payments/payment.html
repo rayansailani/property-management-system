@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Welcome to payment page</h1>
+<form action="{% url 'payment_rent' %}" method=POST>
+    {% csrf_token %}
+    <button type="submit">Confirm Payment</button>
+
+</form>
+{% endblock %}

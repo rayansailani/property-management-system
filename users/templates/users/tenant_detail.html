@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+{{tenant.tenant}}
+<br>
+{{tenant.property}}
+<br>
+{{tenant.property.rent}}
+<br>
+{{tenant.aadhar_no}}
+<br>
+{{tenant.address_proof.url}}
+<img src="{{tenant.address_proof.url}}" alt="address_proof not available">
+<a href="{% url 'property_rent_detail' tenant.property.id %}">View property Info</a>
+
+{% endblock %}

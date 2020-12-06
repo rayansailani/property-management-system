@@ -1,0 +1,14 @@
+{% extends 'base.html '%}
+
+{% block content %}
+<form action="" method="get">
+    {{myFilter.form}}
+    <button type="submit">Search</button>
+</form>
+<hr>
+{% for property in properties %}
+<p class="m-3">{{property.no}}</p>
+<a href="{% url 'appoint_form' property.id %}">Book an appartment</a>
+<br>
+{% endfor %}
+{% endblock %}

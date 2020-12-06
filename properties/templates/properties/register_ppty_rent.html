@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Regsiter your property for rent </h1>
+<form action="{% url 'rentalRegistration' %}" method="POST">
+    {% csrf_token %}
+    {{ ppty_reg_form }}
+
+    <button type="submit">Regsiter Property for Rent</button>
+</form>
+
+{% endblock %}
