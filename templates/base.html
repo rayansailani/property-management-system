@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>OnePage Bootstrap Template - Index</title>
+    <title>PropertySage</title>
     <meta content="" name="descriptison">
     <meta content="" name="keywords">
 
@@ -76,12 +76,18 @@
 
             <nav class="nav-menu d-none d-lg-block">
                 <ul>
-                    <li class="active"><a href="index.html">Home</a></li>
+                    <li class="active"><a href="{% url 'home'%}">Home</a></li>
                     <li><a href="#about">About</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#team">Team</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li class="drop-down"><a href="">
+                            Properties
+                        </a>
+                        <ul>
+                            <li><a href="{% url 'property_rent_list' %}">Properties for rent</a>
+                            <li><a href="{% url 'property_list' %}">Properties for sale</a>
+                            </li>
+                        </ul>
+                    </li>
 
                     <li class="drop-down"><a href="">
                             {% if request.user.is_authenticated %}
@@ -92,42 +98,41 @@
                         </a>
                         {% if request.user.is_authenticated %}
                         <ul>
-                            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
 
-                            <li class="drop-down"><a href="#">Quick Actions</a>
-                                <ul>
-                                    {% if request.user.is_ppty_owner %}
-                                    <li><a href="{% url 'saleRegistration' %}">Property for sale</a></li>
-                                    <li><a href="{% url 'rentalRegistration' %}">Property for rent</a></li>
-                                    {% else %}
-                                    <li><a href="{% url 'registerOwners' %}">Register as a property owner</a></li>
-                                    {% endif %}
-                                    {% if not request.user.is_tenant  %}
-                                    <li><a href="{% url 'registerTenant' %}">Register as a Tenant</a></li>
-                                    {% endif %}
+                            {% if request.user.is_ppty_owner %}
+                            <li><a href="{% url 'saleRegistration' %}">Property for sale</a></li>
+                            <li><a href="{% url 'rentalRegistration' %}">Property for rent</a></li>
+                            {% else %}
+                            <li><a href="{% url 'registerOwners' %}">Register as a property owner</a></li>
+                            {% endif %}
+                            {% if not request.user.is_tenant  %}
+                            <li><a href="{% url 'registerTenant' %}">Register as a Tenant</a></li>
+                            {% endif %}
 
-                                    <li><a href="{% url 'logout' %}">Logout</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="{% url 'logout' %}">Logout</a></li>
+
                         </ul>
                         {% else %}
                         <ul>
                             <li><a href="{% url 'login' %}">Login</a></li>
                             <li><a href="{% url 'register' %}">Register</a></li>
+
                         </ul>
+
                         {% endif %}
 
 
                     </li>
-                    <li><a href="#contact">Contact</a></li>
+
 
                 </ul>
             </nav><!-- .nav-menu -->
 
-            <a href="#about" class="get-started-btn scrollto">Get Started</a>
+
 
         </div>
     </header>
+    <div style="margin-bottom:100px;"></div>
     {% block content %}
 
     {% endblock %}

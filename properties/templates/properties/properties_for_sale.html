@@ -1,5 +1,5 @@
 {% extends 'base.html '%}
-
+{%load crispy_forms_tags %}
 {% block content %}
 <form action="" method="get">
     {{myFilter.form}}
@@ -8,7 +8,11 @@
 <hr>
 {% for property in properties %}
 <p class="m-3">{{property.no}}</p>
+{% if request.user.is_authenticated %}
 <a href="{% url 'appoint_form' property.id %}">Book an appartment</a>
+{% else %}
+<p>Please create an account or login to book appointment to visit this property</p>
+{% endif %}
 <br>
 {% endfor %}
 {% endblock %}

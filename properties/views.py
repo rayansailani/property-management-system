@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from .forms import RentalRegistrationForm, PropertyRegistrationForm, AppointmentForm
+from .forms import RentalRegistrationForm, PropertyRegistrationForm, AppointmentForm, RentAppointmentForm
 from .models import PropertyForRent, PropertyForSale, Appointment
-from .filters import PropertyFilter
+from .filters import PropertyFilter, PropertyRentFilter
 # Create your views here.
 
 
@@ -78,3 +78,63 @@ def appointment_view_form(request, id):
         form = AppointmentForm()
     context['appointement_reg_form'] = form
     return render(request, 'properties/appointment.html', context)
+
+
+def rental_appointment_view_form(request, id):
+    context = {}
+    property = PropertyForRent.objects.get(id=id)
+    if request.POST:
+        form = RentAppointmentForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.visitor = request.user
+            instance.property = property
+            instance.owner = property.owner
+            instance.save()
+            return redirect('dashboard')
+    else:
+        form = RentAppointmentForm()
+    context['appointment_rent_form'] = form
+    return render(request, 'properties/appointment_rent.html', context)
+
+
+# def rental_appointment_view_form(request, id):
+#     context = {}
+#     property = PropertyForRent.objects.get(id=id)
+#     if request.POST:
+#         form = RentAppointmentForm(request.POST)
+#         if form.is_valid():
+#             instance = form.save(commit=False)
+#             instance.vistor = request.user
+#             instance.owner = property.owner
+#             instance.property = property
+#             instance.save()
+#             return redirect('dashboard')
+#     else:
+#         form = RentAppointmentForm()
+#     context['appointment_rent_form'] = form
+#     return render(request, 'properties/appointment_rent.html', context)
+
+
+def properties_for_rent_view(request):
+    rental_props = PropertyForRent.objects.filter(is_occupied=False)
+    MyFilter = PropertyRentFilter(request.GET, queryset=rental_props)
+    rental_props = MyFilter.qs
+    context = {}
+    avg_rent = 0
+    avg_deposit = 0
+    for x in rental_props:
+        avg_deposit += x.security_deposit
+        avg_rent += x.rent
+    try:
+        avg_rent = avg_rent/rental_props.count()
+        avg_deposit = avg_deposit/rental_props.count()
+    except Exception:
+        avg_rent = 0
+        avg_deposit = 0
+    context['rent'] = avg_rent
+    context['deposit'] = avg_deposit
+    context['properties'] = rental_props
+    context['count'] = rental_props.count()
+    context["myFilter"] = MyFilter
+    return render(request, 'properties/properties_for_rent.html', context)

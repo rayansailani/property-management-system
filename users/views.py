@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from accounts.models import Account
 from . forms import RegisterOwners, TenantRegistrationForm, BuyerRegistrationForm
-from properties.models import PropertyForRent, PropertyForSale, Appointment
+from properties.models import PropertyForRent, PropertyForSale, Appointment, visit
 from django.shortcuts import render, redirect
 from . models import Tenant
 import datetime
@@ -85,8 +85,8 @@ def load_cities(request):
 def dashboard_view(request):
     context = {}
     tenants = Tenant.objects.filter(property_owner=request.user)
-    rents = {
-    }
+    visits = visit.objects.filter(owner=request.user)
+    context['visit'] = visits
     try:
         rental_house = Tenant.objects.get(tenant=request.user)
         payment_status = RentPayment.objects.filter(

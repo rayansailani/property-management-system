@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{{prop.property_name}}
+<!-- {{prop.property_name}}
 <br>
 <img src="{{prop.image1.url}}" alt="image not found">
 <br>
@@ -9,6 +9,64 @@
 <br>
 <img src="{{prop.image3.url}}" alt="image not found">
 <br>
-<img src="{{prop.image4.url}}" alt="image not found">
+<img src="{{prop.image4.url}}" alt="image not found"> -->
+<main id="main">
 
+    <!-- ======= Breadcrumbs ======= -->
+    <section id="breadcrumbs" class="breadcrumbs">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>House Details</h2>
+                <ol>
+                    <li><a href="{{ url 'properties_list'  }}">Back</a></li>
+                    <li>{{prop.property_name}}</li>
+                </ol>
+            </div>
+
+        </div>
+    </section><!-- End Breadcrumbs -->
+
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+        <div class="container" data-aos="fade-up">
+
+            <div class="portfolio-details-container">
+
+                <div class="owl-carousel portfolio-details-carousel">
+                    <img src="{{prop.image1.url}}" class="img-fluid" alt="">
+                    <img src="{{prop.image2.url}}" class="img-fluid" alt="">
+                    <img src="{{prop.image3.url}}" class="img-fluid" alt="">
+                    <img src="{{prop.image4.url}}" class="img-fluid" alt="">
+                </div>
+
+                <!-- <div class="portfolio-info">
+                    <h3>Project information</h3>
+                    <ul>
+                        <li><strong>Category</strong>: Web design</li>
+                        <li><strong>Client</strong>: ASU Company</li>
+                        <li><strong>Project date</strong>: 01 March, 2020</li>
+                        <li><strong>Project URL</strong>: <a href="#">www.example.com</a></li>
+                    </ul>
+                </div> -->
+
+            </div>
+
+            <div class="portfolio-description">
+                <h2>{{prop.property_name}}</h2>
+                <p>
+                    Rent: {{prop.rent}}
+                </p>
+                <p>
+                    No of rooms: {{prop.no_rooms}}
+                </p>
+                <p>
+                    Deposit: {{prop.security_deposit}}
+                </p>
+            </div>
+
+        </div>
+    </section><!-- End Portfolio Details Section -->
+
+</main><!-- End #main -->
 {% endblock %}

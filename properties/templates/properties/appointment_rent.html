@@ -3,7 +3,7 @@
 {% block content %}
 <form action="" method="POST">
     {% csrf_token %}
-    {{appointement_reg_form|crispy}}
+    {{appointment_rent_form|crispy}}
     <button type="submit">Confirm Visit</button>
 </form>
 {% endblock %}

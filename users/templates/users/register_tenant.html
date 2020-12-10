@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{%load crispy_forms_tags %}
 {% block content %}
 
 
 <h2>Register</h2>
 <form method="post" id="property_form" action="{% url 'registerTenant' %}"
-    data-properties-url="{% url 'ajax_load_properties' %}">{% csrf_token %}
-    {% for field in tenant_reg_form %}
+    data-properties-url="{% url 'ajax_load_properties' %}" class="text-center border border-light p-5">{% csrf_token %}
+    <!-- {% for field in tenant_reg_form %}
     <p>
         {{field.label_tag}}
         {{field}}
@@ -18,8 +19,9 @@
     <p style="color: red;">{{error}}</p>
     {% endfor %}
     </p>
-    {% endfor %}
-    <button type="submit">Register as tenant</button>
+    {% endfor %} -->
+    {{tenant_reg_form|crispy}}
+    <button type="submit" class="btn btn-primary">Register as tenant</button>
 
 </form>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

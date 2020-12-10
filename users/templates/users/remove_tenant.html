@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
+{%load crispy_forms_tags %}
 {% block content %}
-<form action="{% url 'remove_tenant' item.id %}" method="POST">
+<form action="{% url 'remove_tenant' item.id %}" method="POST" class="text-center border border-light p-5">
     {% csrf_token %}
     <h1>Are you sure you want to remove {{item.tenant}}</h1>
-    <button type="submit">Remove</button>
+    <button type="submit" class="btn btn-danger">Remove</button>
 </form>
 {% endblock  %}

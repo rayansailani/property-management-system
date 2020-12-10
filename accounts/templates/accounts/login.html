@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
+{%load crispy_forms_tags %}
 {% block content %}
 
 
-<h2>Register</h2>
-<form method="post" action="{% url 'login' %}" class="text-center border border-light p-5">{% csrf_token %}
+
+<!-- <form method="post" action="{% url 'login' %}" class="text-center border border-light p-5">{% csrf_token %}
     {% for field in login_form %}
     <p>
         {{field.label}}{{field}} {% if field.help_text %}
@@ -20,6 +21,12 @@
     <input type="hidden" name="next" value="{{ request.GET.next }}" />
     {% endif %}
     <button type="submit">Login</button>
+
+</form> -->
+<form method="post" action="{% url 'login' %}" class="text-center border border-light p-5">{% csrf_token %}
+    <h2>Login</h2>
+    {{login_form|crispy}}
+    <button type="submit" class="btn btn-primary">Login</button>
 
 </form>
 {% endblock %}

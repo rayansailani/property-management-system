@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
-
+{%load crispy_forms_tags %}
 {% block content %}
-<h1>Register Property for sale</h1>
-<form action="{% url 'saleRegistration' %}" method="POST">
+
+<form action="{% url 'saleRegistration' %}" method="POST" class="text-center border border-light p-5">
+    <h1>Register Property for sale</h1>
     {% csrf_token %}
-    {{ registration_form }}
-    <button type="submit">Submit</button>
+    {{ registration_form|crispy}}
+    <button type="submit" class="btn btn-primary">Submit</button>
 
 </form>
 {% endblock %}

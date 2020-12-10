@@ -80,8 +80,21 @@
 
 {% endfor %}
 {% endif %}
+{% if appointments %}
 <h1>Appointments coming up</h1>
 {% for appointment in appointments %}
 {{appointment.date_appointement}}
 {% endfor %}
+{% endif %}
+
+{% if visit %}
+<h1>Upcoming visits to your rental properties</h1>
+{% for vis in visit %}
+{{vis.property}}
+{{vis.visitor}}
+{{vis.date_appointement}}
+{{vis.time_appointment}}
+{% endfor %}
+{% endif %}
+
 {% endblock %}

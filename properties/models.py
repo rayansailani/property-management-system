@@ -22,6 +22,8 @@ class PropertyForRent(models.Model):
     image4 = models.ImageField(
         default='house_images/house.jpg', upload_to='house_images/')
 
+    description = models.TextField(max_length=1000, default=" ")
+
     def __str__(self):
         return self.property_name + ' - ' + self.floor_no
 
@@ -46,6 +48,7 @@ class PropertyForSale(models.Model):
     cost_sqft = models.IntegerField()
     ceritification = models.CharField(
         choices=khata, default="B-Khata", max_length=8)
+    description = models.TextField(max_length=1000, default=" ")
 
     def __str__(self):
         return self.owner.username + " - " + str(self.no)
@@ -68,5 +71,26 @@ class Appointment(models.Model):
         return str(self.date_appointement) + " - " + str(self.time_appointment)
 
     class Meta:
-        verbose_name = "Appointment"
-        verbose_name_plural = "Appointments"
+        verbose_name = "Appointment "
+        verbose_name_plural = "Appointments for sale property"
+
+
+class visit(models.Model):
+    owner = models.ForeignKey(
+        User, related_name="ppty_owner_rent", default=None, on_delete=models.CASCADE
+    )
+    visitor = models.ForeignKey(
+        User, default=None, on_delete=models.CASCADE
+    )
+    property = models.ForeignKey(
+        PropertyForRent, default=None, on_delete=models.CASCADE
+    )
+    date_appointement = models.DateField()
+    time_appointment = models.TimeField()
+
+    def __str__(self):
+        return str(self.date_appointement) + " - " + str(self.time_appointment)
+
+    class Meta:
+        verbose_name = "Appointment "
+        verbose_name_plural = "Appointments for rental property"

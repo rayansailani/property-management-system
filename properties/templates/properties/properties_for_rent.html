@@ -1,0 +1,25 @@
+{% extends 'base.html '%}
+{%load crispy_forms_tags %}
+{% block content %}
+<form action="" method="get">
+    {{myFilter.form}}
+    <button type="submit">Search</button>
+</form>
+<hr>
+<p>No of results: {{count}}</p>
+<p>Average rent in your search: {{rent}}</p>
+<p>Avergage deposit in your search {{deposit}}</p>
+
+{% for property in properties %}
+<p class="m-3">{{property.property_name}}</p>
+<p class="m-3">{{property.no_rooms}}</p>
+<p class="m-3">{{property.rent}}</p>
+<p class="m-3">{{property.security_deposit}}</p>
+{% if request.user.is_authenticated %}
+<a href="{% url 'appoint_rent_form' property.id %}">Book an appointment</a>
+{% else %}
+<p>To book appointment login or create an account</p>
+{% endif %}
+<br>
+{% endfor %}
+{% endblock %}

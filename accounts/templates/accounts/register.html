@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 
 
 <h2>Register</h2>
 <form method="post" action="{% url 'register' %}" class="text-center border border-light p-5">{% csrf_token %}
-    {% for field in registration_form %}
+    <h2>Register</h2>
+    <!-- {% for field in registration_form %}
     <p>
         {{field.label_tag}}
         {{field}}
@@ -17,8 +19,10 @@
     <p style="color: red;">{{error}}</p>
     {% endfor %}
     </p>
-    {% endfor %}
-    <button type="submit">Register</button>
+    {% endfor %} -->
+    {{registration_form|crispy}}
+    <button type="submit" class="btn btn-primary">Register</button>
+
 
 </form>
 {% endblock %}
