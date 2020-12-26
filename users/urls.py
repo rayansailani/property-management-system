@@ -10,5 +10,6 @@ urlpatterns = [
     path('dashboard/', views.dashboard_view, name='dashboard'),
     path('tenant/<tenant_id>', views.tenant_detail_view, name="tenant_detail"),
     path('<tenant_id>/delete/', views.remove_tenant_view, name="remove_tenant"),
+
     # path('rentreg', views.register_property_rent_view, name="rentalRegistration")
 ]

@@ -1,25 +1,102 @@
 {% extends 'base.html '%}
 {%load crispy_forms_tags %}
 {% block content %}
-<form action="" method="get">
-    {{myFilter.form}}
-    <button type="submit">Search</button>
-</form>
-<hr>
-<p>No of results: {{count}}</p>
-<p>Average rent in your search: {{rent}}</p>
-<p>Avergage deposit in your search {{deposit}}</p>
+<style>
+    .details {
+        margin: auto;
+        padding: 2rem;
+        background-color: #f1f1f1;
+        box-shadow: 12px 13px 15px rgba(127, 137, 161, 0.25);
+        border-radius: 16px;
+        margin-bottom: 2rem;
+    }
 
-{% for property in properties %}
-<p class="m-3">{{property.property_name}}</p>
-<p class="m-3">{{property.no_rooms}}</p>
-<p class="m-3">{{property.rent}}</p>
-<p class="m-3">{{property.security_deposit}}</p>
-{% if request.user.is_authenticated %}
-<a href="{% url 'appoint_rent_form' property.id %}">Book an appointment</a>
-{% else %}
-<p>To book appointment login or create an account</p>
-{% endif %}
-<br>
-{% endfor %}
+    .sale_form {
+        display: block;
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .sale_form>input {
+        border-radius: 4px;
+        margin: 2px;
+    }
+
+    .sale_form>input:focus {
+        border: none;
+    }
+
+    .sale_form>button {
+        margin: auto;
+        display: block;
+    }
+
+    .q_details {
+        margin: auto;
+        text-align: center;
+    }
+</style>
+<div class="section-title">
+    <h2>Our Filter</h2>
+</div>
+<form class="container sale_form details" action="" method="get">
+    {{myFilter.form}}
+    <button class="btn btn-primary" type="submit">Search</button>
+</form>
+
+
+<div class="section-title">
+    <h2>List of properties for Rent</h2>
+</div>
+<div class="container details">
+    <div class="q_details">
+        <p>No of results: {{count}}</p>
+        <p>Average rent in your search: {{rent}}</p>
+        <p>Avergage deposit in your search {{deposit}}</p>
+    </div>
+    {% for house in properties %}
+    <p>{{house.property_name}}</p>
+    <p>{{house.address}}</p>
+    <a href="#" data-toggle="modal" data-target="#myModal{{house.id}}">more infromation</a>
+    <hr>
+    <div class="modal fade" id="myModal{{house.id}}" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title">Property information</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Full Address: {{house.address}}</p>
+                    <p>Floor no: {{floor_no}}</p>
+                    <p>Owner Name : {{house.owner}}</p>
+                    <p>No of rooms: {{no_rooms}}</p>
+                    <p>Rent: {{house.rent}}</p>
+                    <p>Security Deposit: {{house.security_deposit}}</p>
+                    <p>Description: {{house.description | linebreaks }}</p>
+                    <img src="{{house.image1.url}}" alt=""><br>
+                    <img src="{{house.image2.url}}" alt=""><br>
+                    <img src="{{house.image3.url}}" alt=""><br>
+                    <img src="{{house.image4.url}}" alt=""><br>
+                    <br>
+                    {% if request.user.is_authenticated %}
+                    <a class="btn btn-primary" style="margin:auto;" href="{% url 'appoint_rent_form' house.id %}">Book
+                        an appointment</a>
+                    {% else %}
+                    <p>To book appointment login or create an account</p>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+</div>
 {% endblock %}

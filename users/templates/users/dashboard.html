@@ -1,8 +1,243 @@
 {% extends 'base.html' %}
 {% block content %}
+<style>
+    /* .details {
+        margin: auto;
+        background: #f2f2f2;
+        padding: 3rem;
+        border-radius: 12px;
+        box-shadow: 12px 13px 15px rgba(127, 137, 161, 0.25);
+        ;
+    }
+
+    .details:hover {
+        box-shadow: 8px 7px 15px rgba(127, 137, 161, 0.25);
+    } */
+</style>
 
 <!-- /.container -->
-<h1>user details</h1>
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="nav-item" id="users" onclick="user_show()">
+            <a class="nav-link " href="#">User Details</a>
+        </li>
+        <li class="nav-item" id="rent" onclick="rental_show()">
+            <a class="nav-link " href="#">Rentals</a>
+        </li>
+        <li class="nav-item" id="sale" onclick="sale_show()">
+            <a class="nav-link" href="#">Sale</a>
+        </li>
+        <li class="nav-item" id="payment" onclick="pay_show()">
+            <a class="nav-link" href="#">Payments</a>
+        </li>
+        <li class="nav-item" id="app" onclick="app_show()">
+            <a class="nav-link " href="#">Appointments</a>
+        </li>
+    </ul>
+    <!-- <div id='user' style="background: #f2f2f2;padding:3rem;">
+        <div class="container d-flex justify-content-center">
+            <div class="card mt-5 px-4 pt-4 pb-2">
+                <div class="media p-2">
+                    <div class="media-body">
+                        <div class="d-flex flex-row justify-content-between">
+                            <h6 class="mt-2 mb-0">{{request.user.username}}</h6><i
+                                class="fas fa-angle-down mr-3 text-muted"></i>
+                        </div>
+
+                    </div>
+                </div>
+                <ul class="list text-muted mt-3 pl-0">
+                    <li><i class="far fa-building mr-3 ml-2"></i>Bussiness account</li>
+                    <li><i class="fas fa-wallet mr-3 ml-2"></i>Finance management</li>
+                    <li><i class="far fa-credit-card mr-3 ml-2"></i>Transactions</li>
+                    <li><i class="fas fa-chart-pie mr-3 ml-2"></i>Spending analysis</li>
+                </ul>
+            </div>
+        </div>
+    </div> -->
+    <div id='user' style="padding:3rem;background-color: #f2f2f2;">
+        <div class="details">
+            <h1>User details</h1>
+            <p>Name: {{request.user.username}}</p>
+            <p>Address: {{request.user.address}}</p>
+            <p>Phone Number: {{request.user.ph_no}}</p>
+            <p>Is a property owner: {% if request.user.is_ppty_owner %}Yes {% else %} No {% endif %}</p>
+            <p>Is a Tenant: {% if request.user.is_tenant %}yes {% else %} No {% endif %}</p>
+
+        </div>
+
+    </div>
+
+    <div id="rental-section" style="display:none; background: #f2f2f2;padding:3rem;">
+        {% if rental_house %}
+        <div class="details">
+            <h1>Your rental house </h1>
+            {{ rental_house.property }}
+            {% if rent_status %}
+            <p>Rent paid </p>
+            {% else %}
+            <a href="{% url 'payment_rent' %}">Pay rent for the month</a>
+            {% endif %}
+            <hr style="background-color: black;">
+        </div>
+        {% else %}
+        <p>You aren't a tenant. Register as a tenant here</p>
+        {% endif %}
+
+        {% if unoccupied_houses %}
+        <h1>All your properties for rent </h1>
+        {% for property in unoccupied_houses %}
+        {{property.property_name}}
+        <br>
+        <a href="{% url 'property_rent_detail' property.id %}">more info</a>
+        <br>
+        <hr style="background-color: black;">
+        {% endfor %}
+        {% else %}
+        <p>You don't have any houses registered for rent. Register here.</p>
+        {% endif %}
+
+        {% if tenants %}
+        <h1>Tenants that are staying in your property</h1>
+        {% for tenant in tenants %}
+        {{tenant.tenant}}
+        <br>
+        {{tenant.start_date}}
+        <br>
+        {{tenant.property.rent}}
+
+        <br>
+        <a href="{% url 'remove_tenant' tenant.id %}">Remove Tenant</a><br>
+        <a href="{% url 'tenant_detail' tenant.id %}">More information</a><br>
+
+        <hr style="background-color: black;">
+
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div id="sale-section" style="display:none ; background: #f2f2f2;padding:3rem;">
+
+        {% if houses %}
+        <h1>Properties registered for sale</h1>
+        {% for house in houses %}
+        <p>{{house.address}}</p>
+        <a href="#" type="button" class="" data-toggle="modal" data-target="#myModal{{house.id}}">More information</a>
+        <hr>
+        <div class="modal fade" id="myModal{{house.id}}" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">Property information</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Full Address: {{house.no}} , {{house.locality}} {{house.area}} {{house.city}},
+                            {{house.state}}</p>
+                        <p>Dimensions: {{house.width}}*{{house.length}}</p>
+                        <p>Cost per Sqft: {{house.cost_sqft}}</p>
+                        <p>Ceritification: {{house.ceritification}}-Khata</p>
+                        <p>Description: {{house.description | linebreaks }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>You don't have any properties registered for sale. Register here.</p>
+        {% endif %}
+    </div>
+    <div id="Payments" style="display:none ; background: #f2f2f2;padding:3rem;">
+        <h1>Rent Payments detail</h1>
+        {% if rents %}
+        {% for rent in rents %}
+        <p>Name - {{rent.sender}} </p>
+        <p>transaction_id - {{rent.transaction_id}}</p>
+        <p>month of - {{rent.month_of}}</p>
+        <p>Status - successful</p>
+
+        {% endfor %}
+        {% else %}
+        <p>No pending transactions.</p>
+        {% endif %}
+    </div>
+    <div id="Appointments" style="display:none ; background: #f2f2f2;padding:3rem;">
+        <h1>Appointments coming up for sale </h1>
+        {% if appointments %}
+        {% for appointment in appointments %}
+        {{appointment.date_appointement}}
+        {% endfor %}
+        {% else %}
+        <p>No appointments for your property for sale</p>
+        {% endif %}
+
+        {% if visit %}
+        <h1>Upcoming visits to your rental properties</h1>
+        {% for vis in visit %}
+        {{vis.property}}
+        {{vis.visitor}}
+        {{vis.date_appointement}}
+        {{vis.time_appointment}}
+        {% endfor %}
+        {% else %}
+        <p>No appointments for your property for rent</p>
+        {% endif %}
+    </div>
+
+</div>
+
+<script>
+    let rent = document.getElementById('rental-section');
+    let sales = document.getElementById('sale-section');
+    let payments = document.getElementById('Payments');
+    let app = document.getElementById('Appointments');
+    let user = document.getElementById('user');
+
+
+    function user_show() {
+        user.style.display = "block";
+        rent.style.display = "none";
+        sales.style.display = "none";
+        payments.style.display = "none";
+        app.style.display = "none";
+    }
+
+
+    function rental_show() {
+        rent.style.display = "block";
+        sales.style.display = "none";
+        payments.style.display = "none";
+        app.style.display = "none";
+        user.style.display = "none";
+    }
+    function sale_show() {
+        rent.style.display = "none";
+        sales.style.display = "block";
+        payments.style.display = "none";
+        app.style.display = "none";
+        user.style.display = "none";
+    } function app_show() {
+        rent.style.display = "none";
+        sales.style.display = "none";
+        payments.style.display = "none";
+        app.style.display = "block";
+        user.style.display = "none";
+    } function pay_show() {
+        rent.style.display = "none";
+        sales.style.display = "none";
+        payments.style.display = "block";
+        app.style.display = "none";
+        user.style.display = "none";
+    }
+
+</script>
+
+<!-- <h1>user details</h1>
 <p>{{request.user.username}}</p>
 {% if request.user.is_ppty_owner %}
 <p>Total number of houses for rent : {{total_properties_rent}}</p>
@@ -15,9 +250,9 @@
 <p>average rent per house: {{average_rent}} </p>
 {% endif %}
 <p>number of properties for sale: </p>
-<hr style="background-color: black;">
+<hr style="background-color: black;"> -->
 <!-- unoccupied houses for rent -->
-{% if unoccupied_houses %}
+<!-- {% if unoccupied_houses %}
 <h1>All your properties for rent </h1>
 {% for property in unoccupied_houses %}
 {{property.property_name}}
@@ -26,22 +261,22 @@
 <br>
 <hr style="background-color: black;">
 {% endfor %}
-{% endif %}
+{% endif %} -->
 <!-- if the user stays in rented place -->
-{% if rental_house %}
+<!-- {% if rental_house %}
 <h1>Your rental house </h1>
 {{ rental_house.property }}
-{% if rent_status  %}
+{% if rent_status %}
 <p>Rent paid </p>
 {% else %}
 <a href="{% url 'payment_rent' %}">Pay rent for the month</a>
 {% endif %}
 <hr style="background-color: black;">
-{% endif %}
+{% endif %} -->
 <!-- if the user has tenants occupying his property -->
-{% if tenants %}
+<!-- {% if tenants %}
 <h1>Tenants that are staying in your property</h1>
-{% for tenant in tenants  %}
+{% for tenant in tenants %}
 {{tenant.tenant}}
 <br>
 {{tenant.start_date}}
@@ -66,7 +301,7 @@
 {% endif %}
 <hr>
 <h1>Properties registered for sale</h1>
-{% if  houses %}
+{% if houses %}
 {% for house in houses %}
 <p>{{house.no}}</p>
 <p>{{house.locality}}</p>
@@ -95,6 +330,6 @@
 {{vis.date_appointement}}
 {{vis.time_appointment}}
 {% endfor %}
-{% endif %}
+{% endif %} -->
 
 {% endblock %}

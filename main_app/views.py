@@ -4,6 +4,7 @@ from django.db import connection
 from accounts.models import Account
 from properties.models import PropertyForRent, PropertyForSale
 from payments.models import RentPayment
+from users.models import Account
 
 
 def homepage_view(request):
@@ -23,3 +24,19 @@ def homepage_view(request):
         'total_amt': total_amt,
     }
     return render(request, 'home.html', context)
+
+
+def data_analysis(request):
+
+    own = Account.objects.all().filter(
+        is_ppty_owner=True).exclude(is_tenant=True).count()
+    ten = Account.objects.all().filter(
+        is_tenant=True).exclude(is_ppty_owner=True).count()
+    both = Account.objects.all().filter(
+        is_ppty_owner=True).filter(is_tenant=True).count()
+    context = {
+        'owners': own,
+        'tenants': ten,
+        'both': both,
+    }
+    return render(request, 'data_analysis.html', context)

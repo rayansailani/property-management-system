@@ -105,7 +105,7 @@
                             {% else %}
                             <li><a href="{% url 'registerOwners' %}">Register as a property owner</a></li>
                             {% endif %}
-                            {% if not request.user.is_tenant  %}
+                            {% if not request.user.is_tenant %}
                             <li><a href="{% url 'registerTenant' %}">Register as a Tenant</a></li>
                             {% endif %}
 
@@ -136,9 +136,9 @@
     {% block content %}
 
     {% endblock %}
-
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
     <!-- <script src="assets/vendor/jquery/jquery.min.js"></script> -->
-    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <!-- <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script> -->
     <!-- <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
     <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <!-- <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script> -->
@@ -164,6 +164,8 @@
         });
     </script> -->
     <script src="{% static 'js/main.js' %}"></script>
+    <!-- <script src="https://www.jsdelivr.com/package/npm/chart.js"></script> -->
+
     <!-- <script src="https://bootstrapcreative.com/wp-bc/wp-content/themes/wp-bootstrap/codepen/bootstrapcreative.js?v=7"></scriptsrc=src=src=> -->
 </body>
 

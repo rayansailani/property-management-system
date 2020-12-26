@@ -1,18 +1,80 @@
 {% extends 'base.html '%}
 {%load crispy_forms_tags %}
 {% block content %}
-<form action="" method="get">
+<style>
+    .details {
+        margin: auto;
+        padding: 2rem;
+        background-color: #f1f1f1;
+        box-shadow: 12px 13px 15px rgba(127, 137, 161, 0.25);
+        border-radius: 16px;
+        margin-bottom: 2rem;
+    }
+
+    .sale_form {
+        display: block;
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .sale_form>input {
+        border-radius: 4px;
+        margin: 2px;
+    }
+
+    .sale_form>input:focus {
+        border: none;
+    }
+
+    .sale_form>button {
+        margin: auto;
+        display: block;
+    }
+</style>
+<div class="section-title">
+    <h2>Search Filter</h2>
+</div>
+<form action="" class="container sale_form details" method="get">
     {{myFilter.form}}
-    <button type="submit">Search</button>
+    <button class="btn btn-primary" type="submit">Search</button>
 </form>
 <hr>
-{% for property in properties %}
-<p class="m-3">{{property.no}}</p>
-{% if request.user.is_authenticated %}
-<a href="{% url 'appoint_form' property.id %}">Book an appartment</a>
-{% else %}
-<p>Please create an account or login to book appointment to visit this property</p>
-{% endif %}
-<br>
-{% endfor %}
+<div class="section-title">
+    <h2>Property list</h2>
+</div>
+
+<div class="container details">
+
+    {% for house in properties %}
+    <p> {{house.address}}</p>
+
+    <a href="#" type="button" class="" data-toggle="modal" data-target="#myModal{{house.id}}">More information</a>
+    <hr>
+    <div class="modal fade" id="myModal{{house.id}}" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h4 class="modal-title">Property information</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Full Address:{{house.addres}}</p>
+                    <p>Dimensions: {{house.width}}*{{house.length}}</p>
+                    <p>Cost per Sqft: {{house.cost_sqft}}</p>
+                    <p>Ceritification: {{house.ceritification}}-Khata</p>
+                    <p>Description: {{house.description | linebreaks }}</p>
+                    <a href="{% url 'appoint_form' house.id %}">Book an appointment</a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

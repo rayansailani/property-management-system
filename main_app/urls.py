@@ -23,10 +23,12 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.homepage_view, name="home"),
+    path('reports', views.data_analysis, name="reports"),
     path('accounts/', include("accounts.urls")),
     path('users/', include('users.urls')),
     path('ppty/', include('properties.urls')),
     path('paymts/', include('payments.urls')),
+
 ]
 
 urlpatterns += staticfiles_urlpatterns()

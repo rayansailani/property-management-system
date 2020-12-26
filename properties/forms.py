@@ -25,11 +25,7 @@ class PropertyRegistrationForm(forms.ModelForm):
     class Meta:
         model = PropertyForSale
         fields = [
-            'no',
-            'locality',
-            'area',
-            'city',
-            'state',
+            'address',
             'width',
             'length',
             'cost_sqft',
