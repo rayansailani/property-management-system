@@ -52,7 +52,7 @@ class PropertyForSale(models.Model):
     description = models.TextField(max_length=1000, default=" ")
 
     def __str__(self):
-        return self.owner.username + " - " + str(self.no)
+        return self.owner.username + " - " + str(self.address)
 
     class Meta:
         verbose_name = "Property"

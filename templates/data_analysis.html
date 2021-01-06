@@ -8,7 +8,14 @@
         width: 205px;
         max-width: 60%;
         margin: auto;
+        /* border: 2px solid black; */
+        background: rgb(241, 241, 241);
+        border-radius: 42px;
+        box-shadow: rgba(127, 137, 161, 0.25) 12px 13px 15px;
+        padding: 23px;
+        margin-bottom: 40px;
     }
+
 
     #myPieChart {
         display: block;
@@ -16,10 +23,20 @@
         width: 205px;
         max-width: 50%;
         margin: auto;
-        max-height: 500px;
+        /* max-height: 500px; */
+        /* border: 2px solid black; */
+        background: rgb(241, 241, 241);
+        border-radius: 42px;
+        box-shadow: rgba(127, 137, 161, 0.25) 12px 13px 15px;
+        padding: 23px;
+        margin-bottom: 40px;
+        ;
     }
 </style>
-<h1>This is the basic report section </h1>
+<div class="section-title">
+    <h2>Report generation using date Analysis</h2>
+</div>
+
 
 <canvas id="myChart" width="200" height="200"></canvas>
 <canvas id="myPieChart"></canvas>
@@ -47,6 +64,14 @@
             }]
     },
     options: {
+        responsive: true,
+            title: {
+            display: true,
+                position: "top",
+                    text: "Number of users that are of different types",
+                        fontSize: 18,
+                            fontColor: "#111"
+        },
         scales: {
             yAxes: [{
                 ticks: {
@@ -64,7 +89,7 @@
             labels: ['rents paid', 'rents not paid'],
             datasets: [{
                 label: '# of users are ',
-                data: [{{ owners }}, {{ both }}],
+                data: [{{ paid }}, {{ not_paid }}],
         backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
             'rgba(54, 162, 235, 0.2)',

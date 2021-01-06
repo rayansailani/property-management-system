@@ -35,6 +35,15 @@ class PropertyRegistrationForm(forms.ModelForm):
 
 
 class AppointmentForm(forms.ModelForm):
+    time_appointment = forms.TimeField(widget=forms.TimeInput(attrs={
+        'class': 'form-control',
+        'type': 'time',
+    }))
+    date_appointement = forms.DateField(widget=forms.DateInput(attrs={
+        'class': 'form-control',
+        'type': 'date',
+    }))
+
     class Meta:
         model = Appointment
         fields = [

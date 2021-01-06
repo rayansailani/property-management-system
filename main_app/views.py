@@ -5,6 +5,7 @@ from accounts.models import Account
 from properties.models import PropertyForRent, PropertyForSale
 from payments.models import RentPayment
 from users.models import Account
+import datetime
 
 
 def homepage_view(request):
@@ -34,9 +35,14 @@ def data_analysis(request):
         is_tenant=True).exclude(is_ppty_owner=True).count()
     both = Account.objects.all().filter(
         is_ppty_owner=True).filter(is_tenant=True).count()
+    paid = RentPayment.objects.all().filter(
+        month_of=datetime.date.today().month).count()
+    not_paid = Account.objects.all().count() - paid
     context = {
         'owners': own,
         'tenants': ten,
         'both': both,
+        'paid': paid,
+        'not_paid': not_paid,
     }
     return render(request, 'data_analysis.html', context)

@@ -1,0 +1,96 @@
+--------------------
+Date: 27:12:2020
+Time: 22:30
+Phone number: +917338150025
+Message: hey this is a test message
+--------------------
+Date: 27:12:2020
+Time: 22:30
+Phone number: +917338150025
+Message: hey this is a test message
+--------------------
+Date: 27:12:2020
+Time: 22:42
+Phone number: +917338150025
+Message: hey this is a test message
+--------------------
+Date: 27:12:2020
+Time: 22:42
+Phone number: +917338150025
+Message: hey this is a test message
+--------------------
+Date: 27:12:2020
+Time: 22:42
+Phone number: +918548080255
+Message: Happy birthday bro! - automated using python
+--------------------
+Date: 27:12:2020
+Time: 22:42
+Phone number: +918548080255
+Message: Happy birthday bro! - automated using python
+--------------------
+Date: 27:12:2020
+Time: 22:47
+Phone number: +918548080255
+Message: Happy birthday bro! - automated using python
+--------------------
+Date: 27:12:2020
+Time: 22:50
+Phone number: +918548080255
+Message: Happy birthday bro! - automated using python
+--------------------
+Date: 27:12:2020
+Time: 22:50
+Phone number: +918548080255
+Message: Happy birthday bro! - automated using python
+--------------------
+Date: 27:12:2020
+Time: 22:51
+Phone number: +918548080255
+Message: Happy birthday bro! - automated using python
+--------------------
+Date: 27:12:2020
+Time: 22:53
+Phone number: +917338150025
+Message: 
+--------------------
+Date: 27:12:2020
+Time: 22:53
+Phone number: +917338150025
+Message: this is a test bro, please adjust
+--------------------
+Date: 27:12:2020
+Time: 23:2
+Phone number: +917338150025
+Message: this is the test message that we need to learn from please see
+--------------------
+Date: 27:12:2020
+Time: 23:4
+Phone number: +917338150025
+Message: this is the test message that we need to learn from please see
+--------------------
+Date: 27:12:2020
+Time: 23:13
+Phone number: +917338150025
+Message: this is the message that I will be sending using whatsapp
+--------------------
+Date: 27:12:2020
+Time: 23:13
+Phone number: +917338150025
+Message: this is the test message that we need to learn from please see
+--------------------
+Date: 27:12:2020
+Time: 23:13
+Phone number: +917338150025
+Message: this is the message that I will be sending using whatsapp
+--------------------
+Date: 27:12:2020
+Time: 23:15
+Phone number: +917338150025
+Message: Please pay rent for the year 2020
+--------------------
+Date: 2:1:2021
+Time: 22:35
+Phone number: +917338150025
+Message: hey bro
+--------------------

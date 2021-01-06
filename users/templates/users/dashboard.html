@@ -34,27 +34,7 @@
             <a class="nav-link " href="#">Appointments</a>
         </li>
     </ul>
-    <!-- <div id='user' style="background: #f2f2f2;padding:3rem;">
-        <div class="container d-flex justify-content-center">
-            <div class="card mt-5 px-4 pt-4 pb-2">
-                <div class="media p-2">
-                    <div class="media-body">
-                        <div class="d-flex flex-row justify-content-between">
-                            <h6 class="mt-2 mb-0">{{request.user.username}}</h6><i
-                                class="fas fa-angle-down mr-3 text-muted"></i>
-                        </div>
 
-                    </div>
-                </div>
-                <ul class="list text-muted mt-3 pl-0">
-                    <li><i class="far fa-building mr-3 ml-2"></i>Bussiness account</li>
-                    <li><i class="fas fa-wallet mr-3 ml-2"></i>Finance management</li>
-                    <li><i class="far fa-credit-card mr-3 ml-2"></i>Transactions</li>
-                    <li><i class="fas fa-chart-pie mr-3 ml-2"></i>Spending analysis</li>
-                </ul>
-            </div>
-        </div>
-    </div> -->
     <div id='user' style="padding:3rem;background-color: #f2f2f2;">
         <div class="details">
             <h1>User details</h1>
@@ -85,7 +65,7 @@
         {% endif %}
 
         {% if unoccupied_houses %}
-        <h1>All your properties for rent </h1>
+        <h1>All your properties for rent (Unoccupied)</h1>
         {% for property in unoccupied_houses %}
         {{property.property_name}}
         <br>
@@ -105,10 +85,15 @@
         {{tenant.start_date}}
         <br>
         {{tenant.property.rent}}
-
         <br>
         <a href="{% url 'remove_tenant' tenant.id %}">Remove Tenant</a><br>
         <a href="{% url 'tenant_detail' tenant.id %}">More information</a><br>
+        <form action="{% url 'message' tenant.id %}" method="GET">
+            {% csrf_token %}
+            <button type="submit">Message on WhatsApp</button>
+        </form>
+
+
 
         <hr style="background-color: black;">
 
@@ -133,8 +118,7 @@
                         <h4 class="modal-title">Property information</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Full Address: {{house.no}} , {{house.locality}} {{house.area}} {{house.city}},
-                            {{house.state}}</p>
+                        <p>Full Address: {{house.address}}</p>
                         <p>Dimensions: {{house.width}}*{{house.length}}</p>
                         <p>Cost per Sqft: {{house.cost_sqft}}</p>
                         <p>Ceritification: {{house.ceritification}}-Khata</p>
@@ -160,32 +144,38 @@
         <p>transaction_id - {{rent.transaction_id}}</p>
         <p>month of - {{rent.month_of}}</p>
         <p>Status - successful</p>
-
+        <hr>
         {% endfor %}
         {% else %}
-        <p>No pending transactions.</p>
+        <p>No transactions made for this month.</p>
         {% endif %}
     </div>
     <div id="Appointments" style="display:none ; background: #f2f2f2;padding:3rem;">
         <h1>Appointments coming up for sale </h1>
         {% if appointments %}
         {% for appointment in appointments %}
-        {{appointment.date_appointement}}
+        <p>Visitor Username: {{appointment.user}}</p>
+        <p>Property: {{appointment.property}}</p>
+        <p>Time: {{appointment.time_appointment}}</p>
+        <p>Date: {{appointment.date_appointement}}</p>
+        <hr>
         {% endfor %}
         {% else %}
-        <p>No appointments for your property for sale</p>
+        <p>No Visits for your property for sale</p>
         {% endif %}
-
-        {% if visit %}
         <h1>Upcoming visits to your rental properties</h1>
+        {% if visit %}
+
         {% for vis in visit %}
-        {{vis.property}}
-        {{vis.visitor}}
-        {{vis.date_appointement}}
-        {{vis.time_appointment}}
+
+        <p>Visitor Username: {{vis.visitor}}</p>
+        <p>Property: {{vis.property}}</p>
+        <p>Time: {{vis.time_appointment}}</p>
+        <p>Date: {{vis.date_appointement}}</p>
+        <hr>
         {% endfor %}
         {% else %}
-        <p>No appointments for your property for rent</p>
+        <p>No Visits for your property for rent</p>
         {% endif %}
     </div>
 

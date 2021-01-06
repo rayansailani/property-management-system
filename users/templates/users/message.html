@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+
+</style>
+<h1>Send a message on WhatsApp</h1>
+
+<form method="POST" class="text-center border border-light p-5" style="margin:10px;">
+    {% csrf_token %}
+    <label for="message_id" class="form-control">Enter your message</label>
+    <br>
+    <textarea rows="5" cols="60" id="message_id" name="message_id" class="form-control"></textarea>
+    <button type="submit" class="btn btn-primary" style="margin-top:15px;">Send Message</button>
+</form>
+
+
+{% endblock %}

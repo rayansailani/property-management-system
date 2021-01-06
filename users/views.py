@@ -6,6 +6,7 @@ from properties.models import PropertyForRent, PropertyForSale, Appointment, vis
 from django.shortcuts import render, redirect
 from . models import Tenant
 import datetime
+import pywhatkit
 from payments.models import RentPayment
 from django.conf import settings
 User = settings.AUTH_USER_MODEL
@@ -85,7 +86,9 @@ def load_cities(request):
 def dashboard_view(request):
     context = {}
     tenants = Tenant.objects.filter(property_owner=request.user)
-    visits = visit.objects.filter(owner=request.user)
+    visits = visit.objects.all().filter(
+        owner=request.user).order_by('date_appointement')
+    visits = visits.filter(date_appointement__gte=datetime.date.today())
     context['visit'] = visits
     try:
         rental_house = Tenant.objects.get(tenant=request.user)
@@ -103,7 +106,10 @@ def dashboard_view(request):
     properties = PropertyForRent.objects.filter(owner=request.user)
 
     unoccupied_houses = properties.filter(is_occupied=False)
-    appointments = Appointment.objects.filter(owner=request.user)
+    appointments = Appointment.objects.all().filter(
+        owner=request.user).order_by('date_appointement')
+    appointments = appointments.filter(
+        date_appointement__gte=datetime.date.today())
     context['appointments'] = appointments
     rents_done = 0
     rents_left = 0
@@ -140,6 +146,7 @@ def dashboard_view(request):
     context['total_rent'] = total_rent
     sale_houses = PropertyForSale.objects.filter(owner=request.user)
     context['houses'] = sale_houses
+    # print(datetime.date.today())
     return render(request, 'users/dashboard.html', context)
 
 
@@ -158,3 +165,23 @@ def buyer_registration_view(request):
         form = BuyerRegistrationForm()
     context['buyer_registration_form'] = form
     return render(request, 'users/register_buyer.html', context)
+
+
+def message_view(request, id):
+    if request.POST:
+        sender = request.user.ph_no
+        reciever = Account.objects.all().get(id=id).ph_no
+        reciever = "+91"+reciever
+        message = request.POST.get('message_id')
+        print(type(sender), type(reciever))
+        try:
+            current_hour = int(datetime.datetime.now().hour)
+            current_minute = int(datetime.datetime.now().minute + 2)
+            pywhatkit.sendwhatmsg(reciever,
+                                  message,
+                                  current_hour, current_minute)
+            print(sender, reciever, message)
+            return redirect('dashboard')
+        except:
+            print("unexpected error has occured")
+    return render(request, 'users/message.html')

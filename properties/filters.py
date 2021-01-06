@@ -8,11 +8,13 @@ class PropertyFilter(django_filters.FilterSet):
                              lookup_expr="gte")
     max_price = NumberFilter(field_name='cost_sqft', lookup_expr="lte")
     address = CharFilter(field_name='address', lookup_expr="icontains")
+    description = CharFilter(field_name='description', lookup_expr="icontains")
 
     class Meta:
         model = PropertyForSale
         fields = '__all__'
-        exclude = ['owner', 'no', 'width', 'length', 'description', ]
+        exclude = ['cost_sqft', 'owner', 'no',
+                   'width', 'length', 'description', ]
 
 
 class PropertyRentFilter(django_filters.FilterSet):
@@ -20,9 +22,10 @@ class PropertyRentFilter(django_filters.FilterSet):
                              lookup_expr="gte")
     max_price = NumberFilter(field_name='rent', lookup_expr="lte")
     location = CharFilter(field_name="address", lookup_expr="icontains")
+    description = CharFilter(field_name='description', lookup_expr="icontains")
 
     class Meta:
         model = PropertyForRent
         fields = "__all__"
-        exclude = ['image1', 'image2', 'image3', 'image4',
+        exclude = ['cost_sqft', 'image1', 'image2', 'image3', 'image4',
                    'is_occupied', 'property_name', 'owner', 'address', 'description']
