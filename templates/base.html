@@ -6,12 +6,12 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>PropertySage</title>
+    <title>Property Studio</title>
     <meta content="" name="descriptison">
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="{% static 'img/new-favicon.webp' %}" rel="icon">
+    <link href="{% static 'img/favicon.jpg' %}" rel="icon">
     <!-- <link href="assets/img/favicon.png" rel="icon"> -->
     <!-- <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon"> -->
 
@@ -70,24 +70,36 @@
     <header id="header" class="fixed-top">
         <div class="container d-flex align-items-center">
 
-            <h1 class="logo mr-auto"><a href="#" style="font-weight: bold;">PropertySage</a></h1>
+            <h1 class="logo mr-auto"><a href="{% url 'home' %}" style="font-weight: bold;">Property Studio</a></h1>
             <!-- Uncomment below if you prefer to use an image logo -->
             <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
             <nav class="nav-menu d-none d-lg-block">
                 <ul>
                     <li class="active"><a href="{% url 'home'%}">Home</a></li>
-                    <li><a href="#about">About</a></li>
+
                     <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
                     <li><a href="{% url 'reports' %}">Reports </a></li>
                     <li class="drop-down"><a href="">
                             Properties
                         </a>
+                        {% if request.user.is_authenticated %}
+                        {% if request.user.is_buyer %}
                         <ul>
                             <li><a href="{% url 'property_rent_list' %}">Properties for rent</a>
                             <li><a href="{% url 'property_list' %}">Properties for sale</a>
                             </li>
                         </ul>
+                        {% else %}
+                        <ul>
+                            <li><a href="{% url 'registerBuyer' %}">Register as a Property Buyer</a></li>
+
+                        </ul>
+                        {% endif %}
+                        {% else %}
+                        {% endif %}
+
+
                     </li>
 
                     <li class="drop-down"><a href="">
@@ -101,8 +113,8 @@
                         <ul>
 
                             {% if request.user.is_ppty_owner %}
-                            <li><a href="{% url 'saleRegistration' %}">Property for sale</a></li>
-                            <li><a href="{% url 'rentalRegistration' %}">Property for rent</a></li>
+                            <li><a href="{% url 'saleRegistration' %}">Register a Property for sale</a></li>
+                            <li><a href="{% url 'rentalRegistration' %}">Register a Property for rent</a></li>
                             {% else %}
                             <li><a href="{% url 'registerOwners' %}">Register as a property owner</a></li>
                             {% endif %}

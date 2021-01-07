@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 {%load crispy_forms_tags %}
 {% block content %}
+<div class="section-title">
+    <h2>Resgister as appointment for this Property for Sale</h2>
+</div>
 <form action="" method="POST">
     {% csrf_token %}
     {{appointement_reg_form|crispy}}
-    <button type="submit">Confirm Visit</button>
+    <button type="submit" class="btn btn-primary">Confirm Visit</button>
 </form>
 {% endblock %}

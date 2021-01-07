@@ -2,9 +2,10 @@
 {%load crispy_forms_tags %}
 {% block content %}
 
+
 <form action="{% url 'rentalRegistration' %}" method="POST" class="text-center border border-light p-5"
     enctype="multipart/form-data">
-    <h1>Regsiter your property for rent </h1>
+
     {% csrf_token %}
     {{ ppty_reg_form|crispy }}
 

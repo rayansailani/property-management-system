@@ -49,4 +49,5 @@ def payment_view(request):
         return redirect('dashboard')
     form = PaymentRentForm()
     context['rent_payment_form'] = form
+    context['rent'] = property.rent
     return render(request, 'payments/payment.html', context)

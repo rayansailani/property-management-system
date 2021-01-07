@@ -156,9 +156,12 @@ def buyer_registration_view(request):
     }
     if request.POST:
         form = BuyerRegistrationForm(request.POST)
+        account = Account.objects.get(username=request.user.username)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.name = request.user
+            account.is_buyer = True
+            account.save()
             instance.save()
             return redirect('dashboard')
     else:

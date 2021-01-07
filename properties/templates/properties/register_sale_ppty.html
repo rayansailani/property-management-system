@@ -2,8 +2,11 @@
 {%load crispy_forms_tags %}
 {% block content %}
 
+<div class="section-title">
+    <h2>Regsiter Property for Sale </h2>
+</div>
 <form action="{% url 'saleRegistration' %}" method="POST" class="text-center border border-light p-5">
-    <h1>Register Property for sale</h1>
+
     {% csrf_token %}
     {{ registration_form|crispy}}
     <button type="submit" class="btn btn-primary">Submit</button>
