@@ -11,5 +11,12 @@ urlpatterns = [
     path('tenant/<tenant_id>', views.tenant_detail_view, name="tenant_detail"),
     path('<tenant_id>/delete/', views.remove_tenant_view, name="remove_tenant"),
     path('send/<id>', views.message_view, name="message"),
+    path('maintain/<id>', views.maintainers_view, name="maintainer_info"),
+    path('remove/maintainer/<id>', views.remove_maintainer_view,
+         name="remove_maintainer"),
+    path('remove/rent_ppty/<id>', views.remove_rent_listing_view,
+         name="remove_rental_property"),
+    path('remove/sale_ppty/<id>', views.remove_sale_listing_view,
+         name="remove_sale_property"),
     # path('rentreg', views.register_property_rent_view, name="rentalRegistration")
 ]

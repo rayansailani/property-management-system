@@ -42,9 +42,10 @@ INSTALLED_APPS = [
     'users',
     'properties',
     'payments',
+    'maintain',
     'django_filters',
     'crispy_forms',
-    'pywhatkit'
+
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

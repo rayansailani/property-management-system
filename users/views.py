@@ -1,3 +1,4 @@
+from django.db import connection
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from accounts.models import Account
@@ -6,7 +7,7 @@ from properties.models import PropertyForRent, PropertyForSale, Appointment, vis
 from django.shortcuts import render, redirect
 from . models import Tenant
 import datetime
-import pywhatkit
+# import pywhatkit
 from payments.models import RentPayment
 from django.conf import settings
 User = settings.AUTH_USER_MODEL
@@ -106,6 +107,7 @@ def dashboard_view(request):
     properties = PropertyForRent.objects.filter(owner=request.user)
 
     unoccupied_houses = properties.filter(is_occupied=False)
+    print(unoccupied_houses, properties)
     appointments = Appointment.objects.all().filter(
         owner=request.user).order_by('date_appointement')
     appointments = appointments.filter(
@@ -171,20 +173,70 @@ def buyer_registration_view(request):
 
 
 def message_view(request, id):
-    if request.POST:
-        sender = request.user.ph_no
-        reciever = Account.objects.all().get(id=id).ph_no
-        reciever = "+91"+reciever
-        message = request.POST.get('message_id')
-        print(type(sender), type(reciever))
-        try:
-            current_hour = int(datetime.datetime.now().hour)
-            current_minute = int(datetime.datetime.now().minute + 2)
-            pywhatkit.sendwhatmsg(reciever,
-                                  message,
-                                  current_hour, current_minute)
-            print(sender, reciever, message)
-            return redirect('dashboard')
-        except:
-            print("unexpected error has occured")
+    # if request.POST:
+    #     sender = request.user.ph_no
+    #     reciever = Account.objects.all().get(id=id).ph_no
+    #     reciever = "+91"+reciever
+    #     message = request.POST.get('message_id')
+    # print(type(sender), type(reciever))
+    # try:
+    #     current_hour = int(datetime.datetime.now().hour)
+    #     current_minute = int(datetime.datetime.now().minute + 2)
+    #     try:
+    #         pywhatkit.sendwhatmsg(reciever,
+    #                               message,
+    #                               current_hour, current_minute)
+    #         print(sender, reciever, message)
+    #         return redirect('dashboard')
+    #     except:
+    #         print("No whatsApp messaging functionality due to lack of wifi networks")
+    # except:
+    #     print("unexpected error has occured")
     return render(request, 'users/message.html')
+
+
+def maintainers_view(request, id):
+    cursor = connection.cursor()
+    context = {}
+    cursor.execute(
+        'select m_id, name, ph_no from maintainers_rent where p_id = %s', [id])
+    property = PropertyForRent.objects.get(id=id)
+    information = cursor.fetchall()
+
+    context['id'] = information[0][0]
+    context['name'] = information[0][1]
+    context['ph_no'] = information[0][2]
+    context['property'] = property
+    cursor.close()
+    return render(request, 'users/maintainer_info.html', context)
+
+
+def remove_maintainer_view(request, id):
+    if request.POST:
+        cursor = connection.cursor()
+        cursor.execute(
+            'select p_id from maintainers_rent where m_id = %s', [id])
+        p_id = cursor.fetchall()
+        p_id = p_id[0][0]
+        cursor.execute('delete from maintainers_rent where m_id = %s', [id])
+        property = PropertyForRent.objects.get(id=p_id)
+        property.has_maintainer = False
+        property.save()
+        cursor.close()
+        return redirect('dashboard')
+
+
+def remove_rent_listing_view(request, id):
+    if request.POST:
+        property = PropertyForRent.objects.get(id=id)
+        property.delete()
+
+        return redirect('dashboard')
+
+
+def remove_sale_listing_view(request, id):
+    if request.POST:
+        property = PropertyForSale.objects.get(id=id)
+        property.delete()
+
+        return redirect('dashboard')

@@ -28,6 +28,7 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('ppty/', include('properties.urls')),
     path('paymts/', include('payments.urls')),
+    path('maintain/', include('maintain.urls')),
 
 ]
 

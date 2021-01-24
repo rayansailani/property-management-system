@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Maintainer information</h2>
+<p>{{name}}</p>
+<p>{{ph_no}}</p>
+<p>
+    {{property}}
+</p>
+<a href="#" data-toggle="modal" data-target="#myModal{{id}}">Remove Maintainer</a>
+<!-- <div class="modal fade" id="myModal{{name}}" role="dialog">
+    <div class="modal-dialog">
+
+        
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Property information</h4>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'remove_maintainer' id %}" method="POST">
+                    {% csrf_token %}
+                    <p>Do you want to remove {{name}} as maintainer from {{property}}??</p>
+                    <button type="submit" class="btn btn-danger">Confirm</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div> -->
+<div class="modal fade" id="myModal{{id}}" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Property information</h4>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <form action="{% url 'remove_maintainer' id %}" method="POST">
+                        {% csrf_token %}
+                        <p>Do you want to remove {{name}} as maintainer from {{property}}??</p>
+                        <button type="submit" class="btn btn-danger">Confirm</button>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

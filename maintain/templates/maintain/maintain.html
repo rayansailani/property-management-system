@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="POST" class="border border-light p-5" style="margin:10px;">
+    {% csrf_token %}
+    <label for="name_id">Name of maintainance incharge</label>
+    <br>
+    <input type="text" id="name_id" name="name_id" class="form-control"></input>
+    <label for="ph_id">Phone Number </label>
+    <br>
+    <input type="text" id="ph_id" name="ph_id" class="form-control"></input>
+    <button type="submit" class="btn btn-primary" style="margin-top:15px;">Add maintainance incharge</button>
+</form>
+{% endblock %}

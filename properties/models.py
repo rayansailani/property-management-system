@@ -23,6 +23,7 @@ class PropertyForRent(models.Model):
         default='house_images/house.jpg', upload_to='house_images/')
 
     description = models.TextField(max_length=1000, default=" ")
+    has_maintainer = models.BooleanField(default=False)
 
     def __str__(self):
         return self.property_name + ' - ' + self.floor_no

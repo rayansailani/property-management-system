@@ -14,7 +14,7 @@ class PropertyFilter(django_filters.FilterSet):
         model = PropertyForSale
         fields = '__all__'
         exclude = ['cost_sqft', 'owner', 'no',
-                   'width', 'length', 'description', ]
+                   'width', 'length', 'description', 'has_maintainer', ]
 
 
 class PropertyRentFilter(django_filters.FilterSet):
@@ -28,4 +28,4 @@ class PropertyRentFilter(django_filters.FilterSet):
         model = PropertyForRent
         fields = "__all__"
         exclude = ['cost_sqft', 'image1', 'image2', 'image3', 'image4',
-                   'is_occupied', 'property_name', 'owner', 'address', 'description']
+                   'is_occupied', 'property_name', 'owner', 'address', 'description', 'has_maintainer']

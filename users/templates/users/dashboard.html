@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <style>
     /* .details {
@@ -69,9 +70,45 @@
         {% for property in unoccupied_houses %}
         {{property.property_name}}
         <br>
+
+
         <a href="{% url 'property_rent_detail' property.id %}">more info</a>
         <br>
-        <hr style="background-color: black;">
+        <a href="#" data-toggle="modal" data-target="#myModal{{property.id}}rent">Remove Listing in the page</a>
+        <br>
+        {% if property.has_maintainer %}
+        <a href="{% url 'maintainer_info' property.id %}">maintainer information</a>
+        {% else %}
+        <a href="{% url 'maintainers' property.id %}">Add a maintainance personal</a>
+        {% endif %}
+        <!-- modal for removing the property from listing  -->
+        <div class="modal fade" id="myModal{{property.id}}rent" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">Property information</h4>
+                    </div>
+                    <div class="modal-body">
+                        are you sure you want to remove <span
+                            style="color:yellow; background:red;">{{property.property_name}}</span>
+                        <form action="{% url 'remove_rental_property'  property.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Confirm removal of listing</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <br>
+        <hr>
         {% endfor %}
         {% else %}
         <p>You don't have any houses registered for rent. Register here.</p>
@@ -106,7 +143,10 @@
         <h1>Properties registered for sale</h1>
         {% for house in houses %}
         <p>{{house.address}}</p>
+
         <a href="#" type="button" class="" data-toggle="modal" data-target="#myModal{{house.id}}">More information</a>
+        <br>
+        <a href="#" data-toggle="modal" data-target="#myModal{{house.id}}sale">Remove Listing in the page</a>
         <hr>
         <div class="modal fade" id="myModal{{house.id}}" role="dialog">
             <div class="modal-dialog">
@@ -123,6 +163,31 @@
                         <p>Cost per Sqft: {{house.cost_sqft}}</p>
                         <p>Ceritification: {{house.ceritification}}-Khata</p>
                         <p>Description: {{house.description | linebreaks }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- modal for removing sale property  -->
+        <div class="modal fade" id="myModal{{house.id}}sale" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">Property information</h4>
+                    </div>
+                    <div class="modal-body">
+                        are you sure you want to remove <span
+                            style="color:yellow; background:red;">{{house.address}}</span>??
+                        <form action="{% url 'remove_sale_property'  house.id %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Confirm removal of listing</button>
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
