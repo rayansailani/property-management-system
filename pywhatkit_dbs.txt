@@ -110,3 +110,13 @@ Time: 12:27
 Phone number: +919972568324
 Message: hey! please pay the rent for the month of January 2020
 --------------------
+Date: 23:2:2021
+Time: 22:54
+Phone number: +917338150025
+Message: please pay the rent for the current month as is it already very late
+--------------------
+Date: 23:2:2021
+Time: 22:57
+Phone number: +917338150025
+Message: hey! Please pay the rent for the current month as it is very late.
+--------------------

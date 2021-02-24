@@ -20,7 +20,6 @@ PyRect==0.1.4
 PyScreeze==0.1.26
 PyTweening==1.0.3
 pytz==2020.4
-pywhatkit==3.8
 requests==2.25.1
 soupsieve==2.1
 sqlparse==0.4.1

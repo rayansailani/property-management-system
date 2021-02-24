@@ -178,7 +178,7 @@ def message_view(request, id):
     #     reciever = Account.objects.all().get(id=id).ph_no
     #     reciever = "+91"+reciever
     #     message = request.POST.get('message_id')
-    # print(type(sender), type(reciever))
+
     # try:
     #     current_hour = int(datetime.datetime.now().hour)
     #     current_minute = int(datetime.datetime.now().minute + 2)
